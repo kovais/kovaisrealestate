@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kovais Realestates | Coimbatore's Trusted Property Partner Since 1985</title>
+    <meta name="description" content="Kovais Real Estate — Coimbatore's trusted real estate agency since 1985. Buy, sell, rent lands, houses, commercial properties with expert guidance.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        forest: {
+                            50: '#fdf2f2', 100: '#fbe8e8', 200: '#f5c8c8', 300: '#f0a8a8',
+                            400: '#e67575', 500: '#d85555', 600: '#ab1919', 700: '#9b1515',
+                            800: '#6d181f', 900: '#5a1218', 950: '#3d0d11'
+                        },
+                        gold: {
+                            50: '#faf8f4', 100: '#f3ede6', 200: '#e8d9c8', 300: '#dcc5aa',
+                            400: '#cc9966', 600: '#996633', 700: '#7d5429', 800: '#5f411f'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; }
+
+        /* Scroll animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .fade-left {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .fade-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .fade-right {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .fade-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .scale-in.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Hero slider */
+        .hero-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 1.2s ease-in-out;
+        }
+        .hero-slide.active {
+            opacity: 1;
+        }
+
+        /* Counter animation */
+        .counter {
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Property card hover */
+        .property-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .property-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);
+        }
+        .dark .property-card:hover {
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+        }
+
+        /* Image zoom on hover */
+        .property-card .img-zoom {
+            transition: transform 0.5s ease;
+        }
+        .property-card:hover .img-zoom {
+            transform: scale(1.08);
+        }
+
+        /* Glass nav */
+        .glass-nav {
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+        .dark .glass-nav {
+            background: rgba(5,46,22,0.9);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        /* Service card glow */
+        .service-card {
+            position: relative;
+            overflow: hidden;
+        }
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(22,163,74,0.06) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        /* FAQ */
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+        .faq-answer.open {
+            max-height: 300px;
+        }
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+        .faq-icon.rotated {
+            transform: rotate(45deg);
+        }
+
+        /* Tab active indicator */
+        .tab-btn {
+            position: relative;
+        }
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #16a34a;
+            border-radius: 3px 3px 0 0;
+        }
+
+        /* Testimonial slider */
+        .testimonial-track {
+            transition: transform 0.5s ease;
+        }
+
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, #ab1919, #6d181f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Pulse dot */
+        .pulse-dot {
+            animation: pulse-dot 2s infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.5); }
+        }
+
+        /* Mobile menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.35s ease;
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        /* Back to top */
+        .back-to-top {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translateY(10px);
+        }
+        .back-to-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        /* Toast */
+        .toast {
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+        .dark ::-webkit-scrollbar-track { background: #1e293b; }
+        .dark ::-webkit-scrollbar-thumb { background: #475569; }
+
+        /* Map container */
+        .map-container {
+            border-radius: 16px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body class="bg-white dark:bg-forest-950 text-slate-800 dark:text-slate-100 transition-colors duration-300">
+
+    <!-- ==================== NAVBAR ==================== -->
+    <nav id="navbar" class="glass-nav fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                <!-- Logo -->
+                <a href="#home" class="flex items-center gap-2">
+                    <img src="reference/KOVAIS REALESTATES_files/logo.png" alt="Kovais Real Estate" class="h-10 w-auto">
+                    <div>
+                        <span class="text-lg font-bold text-forest-800 dark:text-forest-300 tracking-tight">KOVAIS</span>
+                        <span class="text-[10px] block -mt-1 text-slate-500 dark:text-slate-400 tracking-widest uppercase">Realestates</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Nav -->
+                <div class="hidden md:flex items-center gap-1">
+                    <a href="#home" class="nav-link px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-forest-600 dark:hover:text-forest-400 rounded-lg hover:bg-forest-50 dark:hover:bg-forest-900/30 transition-all">Home</a>
+                    <a href="#about" class="nav-link px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-forest-600 dark:hover:text-forest-400 rounded-lg hover:bg-forest-50 dark:hover:bg-forest-900/30 transition-all">About</a>
+                    <a href="#properties" class="nav-link px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-forest-600 dark:hover:text-forest-400 rounded-lg hover:bg-forest-50 dark:hover:bg-forest-900/30 transition-all">Properties</a>
+                    <a href="#services" class="nav-link px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-forest-600 dark:hover:text-forest-400 rounded-lg hover:bg-forest-50 dark:hover:bg-forest-900/30 transition-all">Services</a>
+                    <a href="#testimonials" class="nav-link px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-forest-600 dark:hover:text-forest-400 rounded-lg hover:bg-forest-50 dark:hover:bg-forest-900/30 transition-all">Testimonials</a>
+                    <a href="#contact" class="nav-link px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-forest-600 dark:hover:text-forest-400 rounded-lg hover:bg-forest-50 dark:hover:bg-forest-900/30 transition-all">Contact</a>
+                </div>
+
+                <!-- Right Actions -->
+                <div class="flex items-center gap-3">
+                    <!-- Theme Toggle -->
+                    <button id="themeToggle" class="w-10 h-10 flex items-center justify-center rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" aria-label="Toggle theme">
+                        <i data-lucide="sun" class="w-4 h-4 hidden dark:block text-gold-400"></i>
+                        <i data-lucide="moon" class="w-4 h-4 block dark:hidden text-slate-600"></i>
+                    </button>
+
+                    <!-- CTA Button -->
+                    <a href="tel:+919843738686" class="hidden sm:flex items-center gap-2 bg-forest-600 hover:bg-forest-700 text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-colors shadow-lg shadow-forest-600/20">
+                        <i data-lucide="phone" class="w-4 h-4"></i>
+                        Call Now
+                    </a>
+
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuBtn" class="md:hidden w-10 h-10 flex items-center justify-center rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" aria-label="Open menu">
+                        <i data-lucide="menu" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobileOverlay" class="fixed inset-0 bg-black/50 z-50 hidden" onclick="closeMobileMenu()"></div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="mobile-menu fixed top-0 right-0 bottom-0 w-72 bg-white dark:bg-forest-950 z-50 shadow-2xl p-6">
+        <div class="flex items-center justify-between mb-8">
+            <span class="text-lg font-bold text-forest-800 dark:text-forest-300">Menu</span>
+            <button onclick="closeMobileMenu()" class="w-10 h-10 flex items-center justify-center rounded-xl border border-slate-200 dark:border-slate-700">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+        <div class="flex flex-col gap-2">
+            <a href="#home" onclick="closeMobileMenu()" class="px-4 py-3 text-sm font-medium rounded-xl hover:bg-forest-50 dark:hover:bg-forest-900/30 hover:text-forest-600 transition-all">Home</a>
+            <a href="#about" onclick="closeMobileMenu()" class="px-4 py-3 text-sm font-medium rounded-xl hover:bg-forest-50 dark:hover:bg-forest-900/30 hover:text-forest-600 transition-all">About</a>
+            <a href="#properties" onclick="closeMobileMenu()" class="px-4 py-3 text-sm font-medium rounded-xl hover:bg-forest-50 dark:hover:bg-forest-900/30 hover:text-forest-600 transition-all">Properties</a>
+            <a href="#services" onclick="closeMobileMenu()" class="px-4 py-3 text-sm font-medium rounded-xl hover:bg-forest-50 dark:hover:bg-forest-900/30 hover:text-forest-600 transition-all">Services</a>
+            <a href="#testimonials" onclick="closeMobileMenu()" class="px-4 py-3 text-sm font-medium rounded-xl hover:bg-forest-50 dark:hover:bg-forest-900/30 hover:text-forest-600 transition-all">Testimonials</a>
+            <a href="#contact" onclick="closeMobileMenu()" class="px-4 py-3 text-sm font-medium rounded-xl hover:bg-forest-50 dark:hover:bg-forest-900/30 hover:text-forest-600 transition-all">Contact</a>
+        </div>
+        <div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800">
+            <a href="tel:+919843738686" class="flex items-center gap-3 bg-forest-600 text-white font-medium px-5 py-3 rounded-xl justify-center">
+                <i data-lucide="phone" class="w-4 h-4"></i>
+                +91 98437 38686
+            </a>
+        </div>
+    </div>
+
+    <!-- ==================== HERO ==================== -->
+    <section id="home" class="relative min-h-screen flex items-center overflow-hidden">
+        <!-- Background Slides -->
+        <div class="absolute inset-0">
+            <div class="hero-slide active">
+                <img src="images/1.jpg" alt="Luxury Villa" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-r from-forest-950/90 via-forest-950/70 to-forest-950/40"></div>
+            </div>
+            <div class="hero-slide">
+                <img src="images/Sungam-coimbatore-city.jpg" alt="Premium Land" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-r from-forest-950/90 via-forest-950/70 to-forest-950/40"></div>
+            </div>
+            <div class="hero-slide">
+                <img src="images/villa-house-model-key-drawing-retro-desktop-real-estate-sale-concept.jpg" alt="Commercial Building" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-r from-forest-950/90 via-forest-950/70 to-forest-950/40"></div>
+            </div>
+        </div>
+
+        <!-- Decorative Elements -->
+        <div class="absolute top-20 right-10 w-72 h-72 bg-forest-500/10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-20 left-10 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl"></div>
+
+        <!-- Content -->
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 w-full">
+            <div class="max-w-2xl">
+                <!-- Badge -->
+                <div class="fade-up inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 text-xs font-medium px-4 py-2 rounded-full mb-6">
+                    <span class="w-2 h-2 bg-forest-400 rounded-full pulse-dot"></span>
+                    Trusted Since 1985 — Coimbatore
+                </div>
+
+                <!-- Heading -->
+                <h1 class="fade-up font-serif text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-[1.1] tracking-tight mb-6">
+                    Find Your <br>
+                    <span class="text-gold-400">Dream Property</span><br>
+                    In Coimbatore
+                </h1>
+
+                <!-- Subtitle -->
+                <p class="fade-up text-lg sm:text-xl text-white/70 font-light leading-relaxed mb-8 max-w-lg">
+                    Lands, Houses & Commercial Properties — expert guidance from Kovai's most experienced real estate team.
+                </p>
+
+                <!-- CTA Buttons -->
+                <div class="fade-up flex flex-wrap gap-4 mb-12">
+                    <a href="#properties" class="group flex items-center gap-2 bg-forest-600 hover:bg-forest-500 text-white font-medium px-8 py-4 rounded-2xl transition-all shadow-lg shadow-forest-600/30 hover:shadow-forest-500/40">
+                        View Properties
+                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                    <a href="#contact" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 text-white font-medium px-8 py-4 rounded-2xl transition-all">
+                        <i data-lucide="message-circle" class="w-4 h-4"></i>
+                        Free Consultation
+                    </a>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="fade-up flex flex-wrap gap-8">
+                    <div>
+                        <div class="text-3xl font-bold text-white counter" data-target="39">0</div>
+                        <div class="text-xs text-white/50 uppercase tracking-wider mt-1">Years Experience</div>
+                    </div>
+                    <div class="w-px bg-white/20"></div>
+                    <div>
+                        <div class="text-3xl font-bold text-white counter" data-target="2500">0</div>
+                        <div class="text-xs text-white/50 uppercase tracking-wider mt-1">Properties Sold</div>
+                    </div>
+                    <div class="w-px bg-white/20"></div>
+                    <div>
+                        <div class="text-3xl font-bold text-white counter" data-target="1800">0</div>
+                        <div class="text-xs text-white/50 uppercase tracking-wider mt-1">Happy Clients</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide Indicators -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+            <button class="slide-dot w-8 h-1.5 rounded-full bg-white/30 transition-all active" onclick="goToSlide(0)"></button>
+            <button class="slide-dot w-8 h-1.5 rounded-full bg-white/30 transition-all" onclick="goToSlide(1)"></button>
+            <button class="slide-dot w-8 h-1.5 rounded-full bg-white/30 transition-all" onclick="goToSlide(2)"></button>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 right-8 z-10 hidden lg:flex flex-col items-center gap-2 text-white/40">
+            <span class="text-[10px] uppercase tracking-widest rotate-90 origin-center translate-y-6">Scroll</span>
+            <div class="w-px h-12 bg-gradient-to-b from-white/40 to-transparent mt-8"></div>
+        </div>
+    </section>
+
+    <!-- ==================== SERVICES STRIP ==================== -->
+    <section class="relative -mt-1 z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-0 bg-white dark:bg-forest-900 rounded-2xl lg:rounded-3xl shadow-xl dark:shadow-2xl dark:shadow-black/30 overflow-hidden">
+                <!-- Service 1 -->
+                <div class="scale-in group p-8 lg:p-10 border-b md:border-b-0 md:border-r border-slate-100 dark:border-forest-800 hover:bg-forest-50/50 dark:hover:bg-forest-800/30 transition-colors cursor-pointer">
+                    <div class="w-14 h-14 bg-forest-100 dark:bg-forest-800 rounded-2xl flex items-center justify-center mb-5 group-hover:bg-forest-200 dark:group-hover:bg-forest-700 transition-colors">
+                        <i data-lucide="key" class="w-6 h-6 text-forest-600 dark:text-forest-300"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-slate-800 dark:text-white mb-2">Buying Properties</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Lands, Houses & Commercial Buildings — find the perfect property with our expert guidance.</p>
+                </div>
+                <!-- Service 2 -->
+                <div class="scale-in group p-8 lg:p-10 border-b md:border-b-0 md:border-r border-slate-100 dark:border-forest-800 hover:bg-forest-50/50 dark:hover:bg-forest-800/30 transition-colors cursor-pointer" style="transition-delay: 0.1s">
+                    <div class="w-14 h-14 bg-gold-100 dark:bg-gold-900/30 rounded-2xl flex items-center justify-center mb-5 group-hover:bg-gold-200 dark:group-hover:bg-gold-900/50 transition-colors">
+                        <i data-lucide="badge-indian-rupee" class="w-6 h-6 text-gold-600 dark:text-gold-400"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-slate-800 dark:text-white mb-2">Selling Properties</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Get the best value for your land, house or commercial building with our market expertise.</p>
+                </div>
+                <!-- Service 3 -->
+                <div class="scale-in group p-8 lg:p-10 hover:bg-forest-50/50 dark:hover:bg-forest-800/30 transition-colors cursor-pointer" style="transition-delay: 0.2s">
+                    <div class="w-14 h-14 bg-blue-100 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center mb-5 group-hover:bg-blue-200 dark:group-hover:bg-blue-900/50 transition-colors">
+                        <i data-lucide="file-text" class="w-6 h-6 text-blue-600 dark:text-blue-400"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-slate-800 dark:text-white mb-2">Renting & Leasing</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Rent or lease properties with full legal consultation and documentation support.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== ABOUT ==================== -->
+    <section id="about" class="py-20 lg:py-28 bg-slate-50/50 dark:bg-forest-950">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                <!-- Image Side -->
+                <div class="fade-left relative">
+                    <div class="relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-xl">
+                        <img src="https://picsum.photos/seed/kovai-about-office/800/600" alt="Kovais Real Estate Office" class="w-full h-80 lg:h-[480px] object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-forest-950/40 to-transparent"></div>
+                    </div>
+                    <!-- Floating Card -->
+                    <div class="absolute -bottom-6 -right-4 lg:-right-8 bg-white dark:bg-forest-900 rounded-2xl p-5 shadow-xl dark:shadow-2xl border border-slate-100 dark:border-forest-800">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 bg-forest-100 dark:bg-forest-800 rounded-xl flex items-center justify-center">
+                                <i data-lucide="shield-check" class="w-7 h-7 text-forest-600 dark:text-forest-300"></i>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold text-forest-700 dark:text-forest-300">1985</div>
+                                <div class="text-xs text-slate-500 dark:text-slate-400">Established Year</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Decorative -->
+                    <div class="absolute -top-4 -left-4 w-24 h-24 border-2 border-forest-200 dark:border-forest-800 rounded-2xl -z-10"></div>
+                </div>
+
+                <!-- Text Side -->
+                <div class="fade-right">
+                    <div class="inline-flex items-center gap-2 text-forest-600 dark:text-forest-400 text-xs font-semibold uppercase tracking-widest mb-4">
+                        <span class="w-8 h-px bg-forest-600 dark:bg-forest-400"></span>
+                        About Us
+                    </div>
+                    <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white leading-tight tracking-tight mb-6">
+                        Helping You Find <br>the <span class="gradient-text">Best Properties</span>
+                    </h2>
+                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
+                        Kovais Real Estate is a full-service real estate agency committed to helping buyers, sellers, and investors achieve their property goals. With years of experience in the Coimbatore market, we pride ourselves on offering expert advice, personalized services, and a result-driven approach.
+                    </p>
+                    <p class="text-slate-500 dark:text-slate-400 leading-relaxed mb-8">
+                        Whether you're buying your first home, selling a property, or looking to invest, we provide a professional service here to guide you every step of the way. We have been serving since 1985 when the real estate sector in India assumed greater prominence with the liberalisation of the economy, as the consequent increase in business opportunities and labour migration led to rising demand for commercial and housing space.
+                    </p>
+
+                    <!-- Trust Points -->
+                    <div class="grid sm:grid-cols-2 gap-4 mb-8">
+                        <div class="flex items-start gap-3">
+                            <div class="w-6 h-6 bg-forest-100 dark:bg-forest-800 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-forest-600 dark:text-forest-300"></i>
+                            </div>
+                            <span class="text-sm text-slate-700 dark:text-slate-300">39+ Years of Experience</span>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-6 h-6 bg-forest-100 dark:bg-forest-800 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-forest-600 dark:text-forest-300"></i>
+                            </div>
+                            <span class="text-sm text-slate-700 dark:text-slate-300">Expert Legal Guidance</span>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-6 h-6 bg-forest-100 dark:bg-forest-800 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-forest-600 dark:text-forest-300"></i>
+                            </div>
+                            <span class="text-sm text-slate-700 dark:text-slate-300">Transparent Pricing</span>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-6 h-6 bg-forest-100 dark:bg-forest-800 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-forest-600 dark:text-forest-300"></i>
+                            </div>
+                            <span class="text-sm text-slate-700 dark:text-slate-300">Personalized Service</span>
+                        </div>
+                    </div>
+
+                    <a href="#contact" class="inline-flex items-center gap-2 bg-forest-600 hover:bg-forest-700 text-white font-medium px-7 py-3.5 rounded-xl transition-colors shadow-lg shadow-forest-600/20">
+                        Get In Touch
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PROPERTIES ==================== -->
+    <section id="properties" class="py-20 lg:py-28 bg-white dark:bg-forest-950">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Header -->
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <div class="fade-up inline-flex items-center gap-2 text-forest-600 dark:text-forest-400 text-xs font-semibold uppercase tracking-widest mb-4">
+                    <span class="w-8 h-px bg-forest-600 dark:bg-forest-400"></span>
+                    Our Properties
+                    <span class="w-8 h-px bg-forest-600 dark:bg-forest-400"></span>
+                </div>
+                <h2 class="fade-up font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white leading-tight tracking-tight mb-4">
+                    Available Properties
+                </h2>
+                <p class="fade-up text-slate-500 dark:text-slate-400">Browse through our handpicked selection of properties across Coimbatore's prime locations.</p>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="fade-up flex justify-center gap-2 mb-10 flex-wrap">
+                <button class="tab-btn active px-5 py-2.5 text-sm font-medium rounded-xl bg-forest-50 dark:bg-forest-900/30 text-forest-700 dark:text-forest-300 border border-forest-200 dark:border-forest-800 transition-all" data-filter="all" onclick="filterProperties('all', this)">All</button>
+                <button class="tab-btn px-5 py-2.5 text-sm font-medium rounded-xl text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:border-forest-200 dark:hover:border-forest-800 hover:text-forest-600 dark:hover:text-forest-400 transition-all" data-filter="house" onclick="filterProperties('house', this)">Houses</button>
+                <button class="tab-btn px-5 py-2.5 text-sm font-medium rounded-xl text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:border-forest-200 dark:hover:border-forest-800 hover:text-forest-600 dark:hover:text-forest-400 transition-all" data-filter="land" onclick="filterProperties('land', this)">Lands</button>
+                <button class="tab-btn px-5 py-2.5 text-sm font-medium rounded-xl text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:border-forest-200 dark:hover:border-forest-800 hover:text-forest-600 dark:hover:text-forest-400 transition-all" data-filter="plot" onclick="filterProperties('plot', this)">Plots</button>
+            </div>
+
+            <!-- Property Grid -->
+            <div id="propertyGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+
+                <!-- Property 1 -->
+                <div class="property-card scale-in bg-white dark:bg-forest-900 rounded-2xl overflow-hidden shadow-lg dark:shadow-2xl dark:shadow-black/20 border border-slate-100 dark:border-forest-800" data-type="house">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="reference/KOVAIS REALESTATES_files/g1.jpg" alt="2800 sqft House Kovaipudur" class="img-zoom w-full h-full object-cover">
+                        <div class="absolute top-4 left-4 flex gap-2">
+                            <span class="bg-forest-600 text-white text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded-lg">House</span>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-white/90 dark:bg-forest-900/90 text-slate-700 dark:text-slate-200 text-[10px] font-semibold px-3 py-1 rounded-lg backdrop-blur-sm">3 BHK</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 text-xs mb-2">
+                            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-forest-500"></i>
+                            Kovaipudur
+                        </div>
+                        <h3 class="text-lg font-semibold text-slate-800 dark:text-white mb-3">3 BHK House</h3>
+                        <div class="flex items-center gap-4 text-xs text-slate-500 dark:text-slate-400 mb-4">
+                            <span class="flex items-center gap-1"><i data-lucide="maximize" class="w-3.5 h-3.5"></i> 2800 sqft</span>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-forest-800">
+                            <a href="tel:+919843738686" class="flex items-center gap-1.5 text-forest-600 dark:text-forest-400 text-sm font-medium hover:text-forest-700 transition-colors">
+                                <i data-lucide="phone" class="w-3.5 h-3.5"></i> Enquire
+                            </a>
+                            <a href="https://wa.me/919843738686?text=Hi, I'm interested in the 3 BHK House at Kovaipudur (2800 sqft)" target="_blank" class="flex items-center gap-1.5 text-green-600 dark:text-green-400 text-sm font-medium hover:text-green-700 transition-colors">
+                                <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Property 2 -->
+                <div class="property-card scale-in bg-white dark:bg-forest-900 rounded-2xl overflow-hidden shadow-lg dark:shadow-2xl dark:shadow-black/20 border border-slate-100 dark:border-forest-800" data-type="house">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="reference/KOVAIS REALESTATES_files/g2.jpg" alt="1943 sqft House Saravanampati" class="img-zoom w-full h-full object-cover">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-forest-600 text-white text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded-lg">House</span>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-white/90 dark:bg-forest-900/90 text-slate-700 dark:text-slate-200 text-[10px] font-semibold px-3 py-1 rounded-lg backdrop-blur-sm">3 BHK</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 text-xs mb-2">
+                            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-forest-500"></i>
+                            Saravanampati
+                        </div>
+                        <h3 class="text-lg font-semibold text-slate-800 dark:text-white mb-3">3 BHK House</h3>
+                        <div class="flex items-center gap-4 text-xs text-slate-500 dark:text-slate-400 mb-4">
+                            <span class="flex items-center gap-1"><i data-lucide="maximize" class="w-3.5 h-3.5"></i> 1943 sqft</span>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-forest-800">
+                            <a href="tel:+919843738686" class="flex items-center gap-1.5 text-forest-600 dark:text-forest-400 text-sm font-medium hover:text-forest-700 transition-colors">
+                                <i data-lucide="phone" class="w-3.5 h-3.5"></i> Enquire
+                            </a>
+                            <a href="https://wa.me/919843738686?text=Hi, I'm interested in the 3 BHK House at Saravanampati (1943 sqft)" target="_blank" class="flex items-center gap-1.5 text-green-600 dark:text-green-400 text-sm font-medium hover:text-green-700 transition-colors">
+                                <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Property 3 -->
+                <div class="property-card scale-in bg-white dark:bg-forest-900 rounded-2xl overflow-hidden shadow-lg dark:shadow-2xl dark:shadow-black/20 border border-slate-100 dark:border-forest-800" data-type="house">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="reference/KOVAIS REALESTATES_files/g4.jpg" alt="7 BHK House Vadavalli" class="img-zoom w-full h-full object-cover">
+                        <div class="absolute top-4 left-4 flex gap-2">
+                            <span class="bg-gold-500 text-white text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded-lg">Premium</span>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-white/90 dark:bg-forest-900/90 text-slate-700 dark:text-slate-200 text-[10px] font-semibold px-3 py-1 rounded-lg backdrop-blur-sm">7 BHK</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 text-xs mb-2">
+                            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-forest-500"></i>
+                            Vadavalli
+                        </div>
+                        <h3 class="text-lg font-semibold text-slate-800 dark:text-white mb-3">7 BHK House</h3>
+                        <div class="flex items-center gap-4 text-xs text-slate-500 dark:text-slate-400 mb-4">
+                            <span class="flex items-center gap-1"><i data-lucide="maximize" class="w-3.5 h-3.5"></i> 7000 sqft</span>
+                            <span class="flex items-center gap-1"><i data-lucide="grid-3x3" class="w-3.5 h-3.5"></i> 7 Cents</span>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-forest-800">
+                            <a href="tel:+919843738686" class="flex items-center gap-1.5 text-forest-600 dark:text-forest-400 text-sm font-medium hover:text-forest-700 transition-colors">
+                                <i data-lucide="phone" class="w-3.5 h-3.5"></i> Enquire
+                            </a>
+                            <a href="https://wa.me/919843738686?text=Hi, I'm interested in the 7 BHK House at Vadavalli (7 Cents, 7000 sqft)" target="_blank" class="flex items-center gap-1.5 text-green-600 dark:text-green-400 text-sm font-medium hover:text-green-700 transition-colors">
+                                <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Property 4 -->
+                <div class="property-card scale-in bg-white dark:bg-forest-900 rounded-2xl overflow-hidden shadow-lg dark:shadow-2xl dark:shadow-black/20 border border-slate-100 dark:border-forest-800" data-type="land">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="reference/KOVAIS REALESTATES_files/g3.jpg" alt="2256 sqft Land Kovaipudur" class="img-zoom w-full h-full object-cover">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-amber-600 text-white text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded-lg">Land</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 text-xs mb-2">
+                            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-forest-500"></i>
+                            Kovaipudur, Park Avenue
+                        </div>
+                        <h3 class="text-lg font-semibold text-slate-800 dark:text-white mb-3">Land Plot</h3>
+                        <div class="flex items-center gap-4 text-xs text-slate-500 dark:text-slate-400 mb-4">
+                            <span class="flex items-center gap-1"><i data-lucide="maximize" class="w-3.5 h-3.5"></i> 2256 sqft</span>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-forest-800">
+                            <a href="tel:+919843738686" class="flex items-center gap-1.5 text-forest-600 dark:text-forest-400 text-sm font-medium hover:text-forest-700 transition-colors">
+                                <i data-lucide="phone" class="w-3.5 h-3.5"></i> Enquire
+                            </a>
+                            <a href="https://wa.me/919843738686?text=Hi, I'm interested in the Land at Kovaipudur Park Avenue (2256 sqft)" target="_blank" class="flex items-center gap-1.5 text-green-600 dark:text-green-400 text-sm font-medium hover:text-green-700 transition-colors">
+                                <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Property 5 -->
+                <div class="property-card scale-in bg-white dark:bg-forest-900 rounded-2xl overflow-hidden shadow-lg dark:shadow-2xl dark:shadow-black/20 border border-slate-100 dark:border-forest-800" data-type="land">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="reference/KOVAIS REALESTATES_files/gno1.jpg" alt="Land Plots Sulur" class="img-zoom w-full h-full object-cover">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-amber-600 text-white text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded-lg">Land</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 text-xs mb-2">
+                            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-forest-500"></i>
+                            Sulur, People's Park
+                        </div>
+                        <h3 class="text-lg font-semibold text-slate-800 dark:text-white mb-3">Land Plots</h3>
+                        <div class="flex items-center gap-4 text-xs text-slate-500 dark:text-slate-400 mb-4">
+                            <span class="flex items-center gap-1"><i data-lucide="grid-3x3" class="w-3.5 h-3.5"></i> 2, 3, 4 Cents</span>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-forest-800">
+                            <a href="tel:+919843738686" class="flex items-center gap-1.5 text-forest-600 dark:text-forest-400 text-sm font-medium hover:text-forest-700 transition-colors">
+                                <i data-lucide="phone" class="w-3.5 h-3.5"></i> Enquire
+                            </a>
+                            <a href="https://wa.me/919843738686?text=Hi, I'm interested in the Land Plots at Sulur People's Park (2,3,4 cents)" target="_blank" class="flex items-center gap-1.5 text-green-600 dark:text-green-400 text-sm font-medium hover:text-green-700 transition-colors">
+                                <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Property 6 -->
+                <div class="property-card scale-in bg-white dark:bg-forest-900 rounded-2xl overflow-hidden shadow-lg dark:shadow-2xl dark:shadow-black/20 border border-slate-100 dark:border-forest-800" data-type="land">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="reference/KOVAIS REALESTATES_files/g6.jpg" alt="3.5 Acres Land Madukarai" class="img-zoom w-full h-full object-cover">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-emerald-700 text-white text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded-lg">Land</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 text-xs mb-2">
+                            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-forest-500"></i>
+                            Madukarai, 2.6 KM from bypass
+                        </div>
+                        <h3 class="text-lg font-semibold text-slate-800 dark:text-white mb-3">Agricultural Land</h3>
+                        <div class="flex items-center gap-4 text-xs text-slate-500 dark:text-slate-400 mb-4">
+                            <span class="flex items-center gap-1"><i data-lucide="maximize" class="w-3.5 h-3.5"></i> 3.5 Acres</span>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-forest-800">
+                            <a href="tel:+919843738686" class="flex items-center gap-1.5 text-forest-600 dark:text-forest-400 text-sm font-medium hover:text-forest-700 transition-colors">
+                                <i data-lucide="phone" class="w-3.5 h-3.5"></i> Enquire
+                            </a>
+                            <a href="https://wa.me/919843738686?text=Hi, I'm interested in the Agricultural Land at Madukarai (3.5 acres)" target="_blank" class="flex items-center gap-1.5 text-green-600 dark:text-green-400 text-sm font-medium hover:text-green-700 transition-colors">
+                                <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Property 7 -->
+                <div class="property-card scale-in bg-white dark:bg-forest-900 rounded-2xl overflow-hidden shadow-lg dark:shadow-2xl dark:shadow-black/20 border border-slate-100 dark:border-forest-800" data-type="land">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="reference/KOVAIS REALESTATES_files/gno3.jpg" alt="2845 sqft Land Kovaipudur" class="img-zoom w-full h-full object-cover">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-amber-600 text-white text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded-lg">Land</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 text-xs mb-2">
+                            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-forest-500"></i>
+                            Kovaipudur, Press Enclave
+                        </div>
+                        <h3 class="text-lg font-semibold text-slate-800 dark:text-white mb-3">Land Plot</h3>
+                        <div class="flex items-center gap-4 text-xs text-slate-500 dark:text-slate-400 mb-4">
+                            <span class="flex items-center gap-1"><i data-lucide="maximize" class="w-3.5 h-3.5"></i> 2845 sqft</span>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-forest-800">
+                            <a href="tel:+919843738686" class="flex items-center gap-1.5 text-forest-600 dark:text-forest-400 text-sm font-medium hover:text-forest-700 transition-colors">
+                                <i data-lucide="phone" class="w-3.5 h-3.5"></i> Enquire
+                            </a>
+                            <a href="https://wa.me/919843738686?text=Hi, I'm interested in the Land at Kovaipudur Press Enclave (2845 sqft)" target="_blank" class="flex items-center gap-1.5 text-green-600 dark:text-green-400 text-sm font-medium hover:text-green-700 transition-colors">
+                                <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Property 8 -->
+                <div class="property-card scale-in bg-white dark:bg-forest-900 rounded-2xl overflow-hidden shadow-lg dark:shadow-2xl dark:shadow-black/20 border border-slate-100 dark:border-forest-800" data-type="house">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="reference/KOVAIS REALESTATES_files/g9.jpg" alt="2200 sqft House Mathampalayam" class="img-zoom w-full h-full object-cover">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-forest-600 text-white text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded-lg">House</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 text-xs mb-2">
+                            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-forest-500"></i>
+                            Mathampalayam, Mettupalayam Road
+                        </div>
+                        <h3 class="text-lg font-semibold text-slate-800 dark:text-white mb-3">House</h3>
+                        <div class="flex items-center gap-4 text-xs text-slate-500 dark:text-slate-400 mb-4">
+                            <span class="flex items-center gap-1"><i data-lucide="maximize" class="w-3.5 h-3.5"></i> 2200 sqft</span>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-forest-800">
+                            <a href="tel:+919843738686" class="flex items-center gap-1.5 text-forest-600 dark:text-forest-400 text-sm font-medium hover:text-forest-700 transition-colors">
+                                <i data-lucide="phone" class="w-3.5 h-3.5"></i> Enquire
+                            </a>
+                            <a href="https://wa.me/919843738686?text=Hi, I'm interested in the House at Mathampalayam Mettupalayam Road (2200 sqft)" target="_blank" class="flex items-center gap-1.5 text-green-600 dark:text-green-400 text-sm font-medium hover:text-green-700 transition-colors">
+                                <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Property 9 -->
+                <div class="property-card scale-in bg-white dark:bg-forest-900 rounded-2xl overflow-hidden shadow-lg dark:shadow-2xl dark:shadow-black/20 border border-slate-100 dark:border-forest-800" data-type="land">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="reference/KOVAIS REALESTATES_files/gno2.jpg" alt="6 Cents Land Sundakamuthur" class="img-zoom w-full h-full object-cover">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-amber-600 text-white text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded-lg">Land</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 text-xs mb-2">
+                            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-forest-500"></i>
+                            Sundakamuthur, Near Kovaipudur
+                        </div>
+                        <h3 class="text-lg font-semibold text-slate-800 dark:text-white mb-3">Land Plot</h3>
+                        <div class="flex items-center gap-4 text-xs text-slate-500 dark:text-slate-400 mb-4">
+                            <span class="flex items-center gap-1"><i data-lucide="grid-3x3" class="w-3.5 h-3.5"></i> 6 Cents + 272 sqft</span>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-forest-800">
+                            <a href="tel:+919843738686" class="flex items-center gap-1.5 text-forest-600 dark:text-forest-400 text-sm font-medium hover:text-forest-700 transition-colors">
+                                <i data-lucide="phone" class="w-3.5 h-3.5"></i> Enquire
+                            </a>
+                            <a href="https://wa.me/919843738686?text=Hi, I'm interested in the Land at Sundakamuthur (6 Cents, 272 sqft)" target="_blank" class="flex items-center gap-1.5 text-green-600 dark:text-green-400 text-sm font-medium hover:text-green-700 transition-colors">
+                                <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== WHY CHOOSE US ==================== -->
+    <section id="services" class="py-20 lg:py-28 bg-slate-50 dark:bg-forest-900/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Header -->
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <div class="fade-up inline-flex items-center gap-2 text-forest-600 dark:text-forest-400 text-xs font-semibold uppercase tracking-widest mb-4">
+                    <span class="w-8 h-px bg-forest-600 dark:bg-forest-400"></span>
+                    Why Choose Us
+                    <span class="w-8 h-px bg-forest-600 dark:bg-forest-400"></span>
+                </div>
+                <h2 class="fade-up font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white leading-tight tracking-tight mb-4">
+                    What Sets Us Apart
+                </h2>
+                <p class="fade-up text-slate-500 dark:text-slate-400">Four decades of trust, built one property at a time.</p>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="fade-up service-card bg-white dark:bg-forest-900 rounded-2xl p-7 border border-slate-100 dark:border-forest-800 hover:border-forest-200 dark:hover:border-forest-700 transition-all group">
+                    <div class="w-14 h-14 bg-forest-100 dark:bg-forest-800 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                        <i data-lucide="clock" class="w-6 h-6 text-forest-600 dark:text-forest-300"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-slate-800 dark:text-white mb-2">39+ Years Legacy</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Serving Coimbatore's real estate needs since 1985 with unmatched experience.</p>
+                </div>
+
+                <div class="fade-up service-card bg-white dark:bg-forest-900 rounded-2xl p-7 border border-slate-100 dark:border-forest-800 hover:border-forest-200 dark:hover:border-forest-700 transition-all group" style="transition-delay: 0.1s">
+                    <div class="w-14 h-14 bg-gold-100 dark:bg-gold-900/30 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                        <i data-lucide="handshake" class="w-6 h-6 text-gold-600 dark:text-gold-400"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-slate-800 dark:text-white mb-2">Trusted Partnerships</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">2500+ successful transactions built on transparency and mutual trust.</p>
+                </div>
+
+                <div class="fade-up service-card bg-white dark:bg-forest-900 rounded-2xl p-7 border border-slate-100 dark:border-forest-800 hover:border-forest-200 dark:hover:border-forest-700 transition-all group" style="transition-delay: 0.2s">
+                    <div class="w-14 h-14 bg-blue-100 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                        <i data-lucide="scale" class="w-6 h-6 text-blue-600 dark:text-blue-400"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-slate-800 dark:text-white mb-2">Legal Expertise</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Complete legal verification, documentation, and registration support.</p>
+                </div>
+
+                <div class="fade-up service-card bg-white dark:bg-forest-900 rounded-2xl p-7 border border-slate-100 dark:border-forest-800 hover:border-forest-200 dark:hover:border-forest-700 transition-all group" style="transition-delay: 0.3s">
+                    <div class="w-14 h-14 bg-rose-100 dark:bg-rose-900/30 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                        <i data-lucide="heart" class="w-6 h-6 text-rose-600 dark:text-rose-400"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-slate-800 dark:text-white mb-2">Personalized Care</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Every client gets dedicated attention tailored to their unique requirements.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== LOCATIONS ==================== -->
+    <section class="py-20 lg:py-28 bg-white dark:bg-forest-950">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <div class="fade-up inline-flex items-center gap-2 text-forest-600 dark:text-forest-400 text-xs font-semibold uppercase tracking-widest mb-4">
+                    <span class="w-8 h-px bg-forest-600 dark:bg-forest-400"></span>
+                    Prime Locations
+                    <span class="w-8 h-px bg-forest-600 dark:bg-forest-400"></span>
+                </div>
+                <h2 class="fade-up font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white leading-tight tracking-tight mb-4">
+                    Properties Across <span class="gradient-text">Coimbatore</span>
+                </h2>
+                <p class="fade-up text-slate-500 dark:text-slate-400">We cover the most sought-after locations in and around Coimbatore.</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <div class="fade-up group relative h-40 rounded-2xl overflow-hidden cursor-pointer">
+                    <img src="data:image/jpeg;base64,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" alt="Kovaipudur" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    <div class="absolute bottom-3 left-3">
+                        <span class="text-white text-sm font-semibold">Kovaipudur</span>
+                    </div>
+                </div>
+                <div class="fade-up group relative h-40 rounded-2xl overflow-hidden cursor-pointer">
+                    <img src="data:image/jpeg;base64,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" alt="Saravanampatti" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    <div class="absolute bottom-3 left-3">
+                        <span class="text-white text-sm font-semibold">Saravanampatti</span>
+                    </div>
+                </div>
+                <div class="fade-up group relative h-40 rounded-2xl overflow-hidden cursor-pointer">
+                    <img src="data:image/jpeg;base64,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" alt="Vadavalli" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    <div class="absolute bottom-3 left-3">
+                        <span class="text-white text-sm font-semibold">Vadavalli</span>
+                    </div>
+                </div>
+                <div class="fade-up group relative h-40 rounded-2xl overflow-hidden cursor-pointer">
+                    <img src="data:image/jpeg;base64,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" alt="Sulur" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    <div class="absolute bottom-3 left-3">
+                        <span class="text-white text-sm font-semibold">Sulur</span>
+                    </div>
+                </div>
+                <div class="fade-up group relative h-40 rounded-2xl overflow-hidden cursor-pointer">
+                    <img src="data:image/jpeg;base64,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" alt="Madukarai" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    <div class="absolute bottom-3 left-3">
+                        <span class="text-white text-sm font-semibold">Madukarai</span>
+                    </div>
+                </div>
+                <div class="fade-up group relative h-40 rounded-2xl overflow-hidden cursor-pointer">
+                    <img src="data:image/jpeg;base64,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" alt="Mettupalayam Road" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    <div class="absolute bottom-3 left-3">
+                        <span class="text-white text-sm font-semibold">Mettupalayam Rd</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== TESTIMONIALS ==================== -->
+    <section id="testimonials" class="py-20 lg:py-28 bg-slate-50 dark:bg-forest-900/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <div class="fade-up inline-flex items-center gap-2 text-forest-600 dark:text-forest-400 text-xs font-semibold uppercase tracking-widest mb-4">
+                    <span class="w-8 h-px bg-forest-600 dark:bg-forest-400"></span>
+                    Testimonials
+                    <span class="w-8 h-px bg-forest-600 dark:bg-forest-400"></span>
+                </div>
+                <h2 class="fade-up font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white leading-tight tracking-tight mb-4">
+                    What Our Clients Say
+                </h2>
+            </div>
+
+            <!-- Testimonial Slider -->
+            <div class="relative overflow-hidden">
+                <div id="testimonialTrack" class="testimonial-track flex">
+                    <!-- Testimonial 1 -->
+                    <div class="w-full md:w-1/2 lg:w-1/3 flex-shrink-0 px-4">
+                        <div class="bg-white dark:bg-forest-900 rounded-2xl p-7 border border-slate-100 dark:border-forest-800 h-full">
+                            <div class="flex gap-1 mb-4">
+                                <i data-lucide="star" class="w-4 h-4 fill-gold-400 text-gold-400"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-gold-400 text-gold-400"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-gold-400 text-gold-400"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-gold-400 text-gold-400"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-gold-400 text-gold-400"></i>
+                            </div>
+                            <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-6">"Kovais Real Estate helped us find the perfect plot in Kovaipudur. Their knowledge of the area and legal documentation support made the entire process smooth. Highly recommended!"</p>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-forest-100 dark:bg-forest-800 rounded-full flex items-center justify-center">
+                                    <span class="text-sm font-bold text-forest-600 dark:text-forest-300">RK</span>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-semibold text-slate-800 dark:text-white">Rajesh Kumar</div>
+                                    <div class="text-xs text-slate-500 dark:text-slate-400">Kovaipudur</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Testimonial 2 -->
+                    <div class="w-full md:w-1/2 lg:w-1/3 flex-shrink-0 px-4">
+                        <div class="bg-white dark:bg-forest-900 rounded-2xl p-7 border border-slate-100 dark:border-forest-800 h-full">
+                            <div class="flex gap-1 mb-4">
+                                <i data-lucide="star" class="w-4 h-4 fill-gold-400 text-gold-400"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-gold-400 text-gold-400"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-gold-400 text-gold-400"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-gold-400 text-gold-400"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-gold-400 text-gold-400"></i>
+                            </div>
+                            <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-6">"We sold our property through Kovais and got an excellent price. Their market understanding is exceptional. The team was professional and responsive throughout."</p>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-gold-100 dark:bg-gold-900/30 rounded-full flex items-center justify-center">
+                                    <span class="text-sm font-bold text-gold-600 dark:text-gold-400">PS</span>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-semibold text-slate-800 dark:text-white">Priya Shankar</div>
+                                    <div class="text-xs text-slate-500 dark:text-slate-400">Saravanampatti</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Testimonial 3 -->
+                    <div class="w-full md:w-1/2 lg:w-1/3 flex-shrink-0 px-4">
+                        <div class="bg-white dark:bg-forest-900 rounded-2xl p-7 border border-slate-100 dark:border-forest-800 h-full">
+                            <div class="flex gap-1 mb-4">
+                                <i data-lucide="star" class="w-4 h-4 fill-gold-400 text-gold-400"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-gold-400 text-gold-400"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-gold-400 text-gold-400"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-gold-400 text-gold-400"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-gold-400 text-gold-400"></i>
+                            </div>
+                            <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-6">"Being an NRI, I was worried about property investment in Coimbatore. Kovais handled everything remotely — from site visits to registration. Truly trustworthy team!"</p>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                                    <span class="text-sm font-bold text-blue-600 dark:text-blue-400">VM</span>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-semibold text-slate-800 dark:text-white">Vikram Mohan</div>
+                                    <div class="text-xs text-slate-500 dark:text-slate-400">NRI — Singapore</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Testimonial 4 -->
+                    <div class="w-full md:w-1/2 lg:w-1/3 flex-shrink-0 px-4">
+                        <div class="bg-white dark:bg-forest-900 rounded-2xl p-7 border border-slate-100 dark:border-forest-800 h-full">
+                            <div class="flex gap-1 mb-4">
+                                <i data-lucide="star" class="w-4 h-4 fill-gold-400 text-gold-400"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-gold-400 text-gold-400"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-gold-400 text-gold-400"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-gold-400 text-gold-400"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-gold-400 text-gold-400"></i>
+                            </div>
+                            <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-6">"Bought a commercial property through Kovais. Their consultation on location viability and future growth potential was invaluable. Great investment decision!"</p>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-rose-100 dark:bg-rose-900/30 rounded-full flex items-center justify-center">
+                                    <span class="text-sm font-bold text-rose-600 dark:text-rose-400">AR</span>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-semibold text-slate-800 dark:text-white">Anand Rajan</div>
+                                    <div class="text-xs text-slate-500 dark:text-slate-400">Ganapathy</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slider Controls -->
+                <div class="flex justify-center gap-3 mt-8">
+                    <button onclick="slideTestimonial(-1)" class="w-10 h-10 rounded-full border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:bg-forest-50 dark:hover:bg-forest-800 transition-colors">
+                        <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                    </button>
+                    <button onclick="slideTestimonial(1)" class="w-10 h-10 rounded-full border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:bg-forest-50 dark:hover:bg-forest-800 transition-colors">
+                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FAQ ==================== -->
+    <section class="py-20 lg:py-28 bg-white dark:bg-forest-950">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <div class="fade-up inline-flex items-center gap-2 text-forest-600 dark:text-forest-400 text-xs font-semibold uppercase tracking-widest mb-4">
+                    <span class="w-8 h-px bg-forest-600 dark:bg-forest-400"></span>
+                    FAQ
+                    <span class="w-8 h-px bg-forest-600 dark:bg-forest-400"></span>
+                </div>
+                <h2 class="fade-up font-serif text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white leading-tight tracking-tight">
+                    Frequently Asked Questions
+                </h2>
+            </div>
+
+            <div class="space-y-3">
+                <div class="fade-up faq-item bg-slate-50 dark:bg-forest-900 rounded-2xl border border-slate-100 dark:border-forest-800 overflow-hidden">
+                    <button class="faq-toggle w-full flex items-center justify-between p-5 text-left" onclick="toggleFaq(this)">
+                        <span class="text-sm font-semibold text-slate-800 dark:text-white pr-4">What types of properties do you deal with?</span>
+                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-forest-600 dark:text-forest-400 flex-shrink-0"></i>
+                    </button>
+                    <div class="faq-answer px-5">
+                        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed pb-5">We deal with all types of properties including residential lands, plots, individual houses, villas, apartments, commercial buildings, and agricultural lands across Coimbatore and surrounding areas.</p>
+                    </div>
+                </div>
+
+                <div class="fade-up faq-item bg-slate-50 dark:bg-forest-900 rounded-2xl border border-slate-100 dark:border-forest-800 overflow-hidden">
+                    <button class="faq-toggle w-full flex items-center justify-between p-5 text-left" onclick="toggleFaq(this)">
+                        <span class="text-sm font-semibold text-slate-800 dark:text-white pr-4">Do you provide legal verification services?</span>
+                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-forest-600 dark:text-forest-400 flex-shrink-0"></i>
+                    </button>
+                    <div class="faq-answer px-5">
+                        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed pb-5">Yes, we provide complete legal verification including title deed check, encumbrance certificate verification, Patta check, and guide you through the entire registration process.</p>
+                    </div>
+                </div>
+
+                <div class="fade-up faq-item bg-slate-50 dark:bg-forest-900 rounded-2xl border border-slate-100 dark:border-forest-800 overflow-hidden">
+                    <button class="faq-toggle w-full flex items-center justify-between p-5 text-left" onclick="toggleFaq(this)">
+                        <span class="text-sm font-semibold text-slate-800 dark:text-white pr-4">Can NRI clients buy properties through you?</span>
+                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-forest-600 dark:text-forest-400 flex-shrink-0"></i>
+                    </button>
+                    <div class="faq-answer px-5">
+                        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed pb-5">Absolutely! We have extensive experience helping NRI clients. We handle everything from virtual property tours to power of attorney arrangements, documentation, and registration on your behalf.</p>
+                    </div>
+                </div>
+
+                <div class="fade-up faq-item bg-slate-50 dark:bg-forest-900 rounded-2xl border border-slate-100 dark:border-forest-800 overflow-hidden">
+                    <button class="faq-toggle w-full flex items-center justify-between p-5 text-left" onclick="toggleFaq(this)">
+                        <span class="text-sm font-semibold text-slate-800 dark:text-white pr-4">What areas in Coimbatore do you cover?</span>
+                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-forest-600 dark:text-forest-400 flex-shrink-0"></i>
+                    </button>
+                    <div class="faq-answer px-5">
+                        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed pb-5">We cover all major areas including Kovaipudur, Saravanampatti, Vadavalli, Sulur, Ganapathy, R.S. Puram, Madukarai, Mettupalayam Road, Sundakamuthur, Kalapatti, and surrounding regions.</p>
+                    </div>
+                </div>
+
+                <div class="fade-up faq-item bg-slate-50 dark:bg-forest-900 rounded-2xl border border-slate-100 dark:border-forest-800 overflow-hidden">
+                    <button class="faq-toggle w-full flex items-center justify-between p-5 text-left" onclick="toggleFaq(this)">
+                        <span class="text-sm font-semibold text-slate-800 dark:text-white pr-4">Do you assist with home loans?</span>
+                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-forest-600 dark:text-forest-400 flex-shrink-0"></i>
+                    </button>
+                    <div class="faq-answer px-5">
+                        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed pb-5">Yes, we provide consultation and connect you with trusted banking partners for home loan assistance. We help with the paperwork and guide you through the loan approval process.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== CTA BANNER ==================== -->
+    <section class="py-20 lg:py-28 relative overflow-hidden">
+        <div class="absolute inset-0">
+            <img src="https://picsum.photos/seed/kovai-cta-banner/1920/600" alt="CTA Background" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-forest-950/85"></div>
+        </div>
+        <div class="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="fade-up">
+                <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight tracking-tight mb-6">
+                    Ready to Find Your <span class="text-gold-400">Dream Property?</span>
+                </h2>
+                <p class="text-lg text-white/70 font-light leading-relaxed mb-8 max-w-xl mx-auto">
+                    Let our 39+ years of experience work for you. Get in touch today for a free, no-obligation consultation.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="tel:+919843738686" class="group flex items-center gap-2 bg-forest-600 hover:bg-forest-500 text-white font-medium px-8 py-4 rounded-2xl transition-all shadow-lg shadow-forest-600/30">
+                        <i data-lucide="phone" class="w-4 h-4"></i>
+                        +91 98437 38686
+                    </a>
+                    <a href="https://wa.me/919843738686?text=Hi, I'm interested in Kovais Real Estate properties. Please share details." target="_blank" class="flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white font-medium px-8 py-4 rounded-2xl transition-all shadow-lg shadow-green-600/30">
+                        <i data-lucide="message-circle" class="w-4 h-4"></i>
+                        WhatsApp Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== CONTACT ==================== -->
+    <section id="contact" class="py-20 lg:py-28 bg-slate-50 dark:bg-forest-950">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <div class="fade-up inline-flex items-center gap-2 text-forest-600 dark:text-forest-400 text-xs font-semibold uppercase tracking-widest mb-4">
+                    <span class="w-8 h-px bg-forest-600 dark:bg-forest-400"></span>
+                    Contact Us
+                    <span class="w-8 h-px bg-forest-600 dark:bg-forest-400"></span>
+                </div>
+                <h2 class="fade-up font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white leading-tight tracking-tight mb-4">
+                    Drop Us a Line
+                </h2>
+                <p class="fade-up text-slate-500 dark:text-slate-400">Have a question or want to discuss a property? We'd love to hear from you.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-5 gap-8 lg:gap-12">
+                <!-- Contact Form -->
+                <div class="lg:col-span-3 fade-left">
+                    <form id="contactForm" class="bg-white dark:bg-forest-900 rounded-2xl lg:rounded-3xl p-7 lg:p-10 border border-slate-100 dark:border-forest-800 shadow-lg">
+                        <div class="grid sm:grid-cols-2 gap-5 mb-5">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">Name *</label>
+                                <input type="text" id="formName" required placeholder="Your full name" class="w-full px-4 py-3 bg-slate-50 dark:bg-forest-800 border border-slate-200 dark:border-forest-700 rounded-xl text-sm text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-forest-500/30 focus:border-forest-500 transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">Phone *</label>
+                                <input type="tel" id="formPhone" required placeholder="+91 XXXXX XXXXX" class="w-full px-4 py-3 bg-slate-50 dark:bg-forest-800 border border-slate-200 dark:border-forest-700 rounded-xl text-sm text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-forest-500/30 focus:border-forest-500 transition-all">
+                            </div>
+                        </div>
+                        <div class="mb-5">
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">Email</label>
+                            <input type="email" id="formEmail" placeholder="your@email.com" class="w-full px-4 py-3 bg-slate-50 dark:bg-forest-800 border border-slate-200 dark:border-forest-700 rounded-xl text-sm text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-forest-500/30 focus:border-forest-500 transition-all">
+                        </div>
+                        <div class="mb-5">
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">Interested In</label>
+                            <select id="formInterest" class="w-full px-4 py-3 bg-slate-50 dark:bg-forest-800 border border-slate-200 dark:border-forest-700 rounded-xl text-sm text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-forest-500/30 focus:border-forest-500 transition-all">
+                                <option value="">Select an option</option>
+                                <option value="buying">Buying Property</option>
+                                <option value="selling">Selling Property</option>
+                                <option value="renting">Renting / Leasing</option>
+                                <option value="consultation">Legal Consultation</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="mb-6">
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">Message *</label>
+                            <textarea id="formMessage" required rows="4" placeholder="Tell us about your requirements..." class="w-full px-4 py-3 bg-slate-50 dark:bg-forest-800 border border-slate-200 dark:border-forest-700 rounded-xl text-sm text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-forest-500/30 focus:border-forest-500 transition-all resize-none"></textarea>
+                        </div>
+                        <button type="submit" class="w-full flex items-center justify-center gap-2 bg-forest-600 hover:bg-forest-700 text-white font-medium py-3.5 rounded-xl transition-colors shadow-lg shadow-forest-600/20">
+                            <i data-lucide="send" class="w-4 h-4"></i>
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="lg:col-span-2 fade-right space-y-6">
+                    <!-- Phone -->
+                    <div class="bg-white dark:bg-forest-900 rounded-2xl p-6 border border-slate-100 dark:border-forest-800 shadow-lg">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-forest-100 dark:bg-forest-800 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="phone" class="w-5 h-5 text-forest-600 dark:text-forest-300"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-slate-800 dark:text-white mb-1">Phone</h4>
+                                <a href="tel:+919843738686" class="text-sm text-forest-600 dark:text-forest-400 hover:text-forest-700 transition-colors">+91 98437 38686</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- WhatsApp -->
+                    <div class="bg-white dark:bg-forest-900 rounded-2xl p-6 border border-slate-100 dark:border-forest-800 shadow-lg">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="message-circle" class="w-5 h-5 text-green-600 dark:text-green-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-slate-800 dark:text-white mb-1">WhatsApp</h4>
+                                <a href="https://wa.me/919843738686" target="_blank" class="text-sm text-green-600 dark:text-green-400 hover:text-green-700 transition-colors">Chat with us on WhatsApp</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Address -->
+                    <div class="bg-white dark:bg-forest-900 rounded-2xl p-6 border border-slate-100 dark:border-forest-800 shadow-lg">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-gold-100 dark:bg-gold-900/30 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="map-pin" class="w-5 h-5 text-gold-600 dark:text-gold-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-slate-800 dark:text-white mb-1">Office Address</h4>
+                                <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">No 6. Thiruchendur Murugan Complex, Sundakamuthur Road, Kovaipudur, Coimbatore 641042, Tamil Nadu, India</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Working Hours -->
+                    <div class="bg-white dark:bg-forest-900 rounded-2xl p-6 border border-slate-100 dark:border-forest-800 shadow-lg">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="clock" class="w-5 h-5 text-blue-600 dark:text-blue-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-slate-800 dark:text-white mb-1">Working Hours</h4>
+                                <p class="text-sm text-slate-500 dark:text-slate-400">Mon – Sat: 9:00 AM – 6:00 PM</p>
+                                <p class="text-sm text-slate-500 dark:text-slate-400">Sunday: By Appointment</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Map -->
+                    <div class="map-container shadow-lg h-48">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d979.278783827698!2d76.929058!3d10.9546747!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba85b27757eac3b%3A0x3e006acf3fb8d64c!2sKovais%20Real%20Estate!5e0!3m2!1sen!2sus!4v1777128656642!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="bg-forest-950 text-white">
+        <!-- Main Footer -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+                <!-- Brand -->
+                <div class="sm:col-span-2 lg:col-span-1">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-10 h-10 bg-forest-600 rounded-xl flex items-center justify-center">
+                            <i data-lucide="building-2" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <div>
+                            <span class="text-lg font-bold text-white tracking-tight">KOVAIS</span>
+                            <span class="text-[10px] block -mt-1 text-slate-400 tracking-widest uppercase">Realestates</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-400 leading-relaxed mb-4">Coimbatore's trusted real estate partner since 1985. Helping you find the perfect property with expert guidance.</p>
+                   
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#home" class="text-sm text-slate-400 hover:text-forest-400 transition-colors">Home</a></li>
+                        <li><a href="#about" class="text-sm text-slate-400 hover:text-forest-400 transition-colors">About Us</a></li>
+                        <li><a href="#properties" class="text-sm text-slate-400 hover:text-forest-400 transition-colors">Properties</a></li>
+                        <li><a href="#services" class="text-sm text-slate-400 hover:text-forest-400 transition-colors">Services</a></li>
+                        <li><a href="#contact" class="text-sm text-slate-400 hover:text-forest-400 transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Property Types -->
+                <div>
+                    <h4 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Property Types</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#properties" class="text-sm text-slate-400 hover:text-forest-400 transition-colors">Residential Lands</a></li>
+                        <li><a href="#properties" class="text-sm text-slate-400 hover:text-forest-400 transition-colors">Individual Houses</a></li>
+                        <li><a href="#properties" class="text-sm text-slate-400 hover:text-forest-400 transition-colors">Premium Villas</a></li>
+                        <li><a href="#properties" class="text-sm text-slate-400 hover:text-forest-400 transition-colors">Commercial Buildings</a></li>
+                        <li><a href="#properties" class="text-sm text-slate-400 hover:text-forest-400 transition-colors">Agricultural Lands</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h4 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Get In Touch</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-2">
+                            <i data-lucide="phone" class="w-4 h-4 text-forest-400 flex-shrink-0 mt-0.5"></i>
+                            <a href="tel:+919843738686" class="text-sm text-slate-400 hover:text-forest-400 transition-colors">+91 98437 38686</a>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-forest-400 flex-shrink-0 mt-0.5"></i>
+                            <span class="text-sm text-slate-400">No 6. Thiruchendur Murugan Complex, Kovaipudur, Coimbatore 641042</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i data-lucide="clock" class="w-4 h-4 text-forest-400 flex-shrink-0 mt-0.5"></i>
+                            <span class="text-sm text-slate-400">Mon – Sat: 9 AM – 6 PM</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Bar -->
+        <div class="border-t border-forest-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+                <p class="text-xs text-slate-500">© 2024 Kovais Realestates. All rights reserved.</p>
+                <p class="text-xs text-slate-600">Design by <span class="text-slate-400">InEvit Digital Solutions</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== FLOATING WHATSAPP BUTTON ==================== -->
+    <a href="https://wa.me/919843738686?text=Hi, I'm interested in Kovais Real Estate properties." target="_blank" class="fixed bottom-6 right-6 z-40 w-14 h-14 bg-green-500 hover:bg-green-600 rounded-full flex items-center justify-center shadow-lg shadow-green-500/30 transition-all hover:scale-110" aria-label="WhatsApp">
+        <i data-lucide="message-circle" class="w-6 h-6 text-white"></i>
+    </a>
+
+    <!-- ==================== BACK TO TOP ==================== -->
+    <button id="backToTop" class="back-to-top fixed bottom-6 left-6 z-40 w-12 h-12 bg-forest-600 hover:bg-forest-700 text-white rounded-full flex items-center justify-center shadow-lg transition-all" onclick="window.scrollTo({top:0, behavior:'smooth'})" aria-label="Back to top">
+        <i data-lucide="chevron-up" class="w-5 h-5"></i>
+    </button>
+
+    <!-- ==================== TOAST NOTIFICATION ==================== -->
+    <div id="toast" class="toast fixed bottom-24 right-6 z-50 bg-forest-600 text-white px-6 py-3.5 rounded-xl shadow-xl flex items-center gap-3">
+        <i data-lucide="check-circle" class="w-5 h-5 text-forest-200"></i>
+        <span id="toastMsg" class="text-sm font-medium">Message sent successfully!</span>
+    </div>
+
+    <!-- ==================== SCRIPTS ==================== -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // ========== THEME TOGGLE ==========
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+
+        // Check saved theme or system preference
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+            lucide.createIcons();
+        });
+
+        // ========== HERO SLIDER ==========
+        const slides = document.querySelectorAll('.hero-slide');
+        const dots = document.querySelectorAll('.slide-dot');
+        let currentSlide = 0;
+        let slideInterval;
+
+        function goToSlide(index) {
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+            dots[currentSlide].style.background = 'rgba(255,255,255,0.3)';
+
+            currentSlide = index;
+
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+            dots[currentSlide].style.background = 'white';
+
+            resetSlideInterval();
+        }
+
+        function nextSlide() {
+            goToSlide((currentSlide + 1) % slides.length);
+        }
+
+        function resetSlideInterval() {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(nextSlide, 5000);
+        }
+
+        // Initialize first dot
+        dots[0].style.background = 'white';
+        slideInterval = setInterval(nextSlide, 5000);
+
+        // ========== COUNTER ANIMATION ==========
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+
+                const update = () => {
+                    current += step;
+                    if (current < target) {
+                        counter.textContent = Math.floor(current).toLocaleString() + '+';
+                        requestAnimationFrame(update);
+                    } else {
+                        counter.textContent = target.toLocaleString() + '+';
+                    }
+                };
+                update();
+            });
+        }
+
+        // Trigger counters when hero is visible
+        let countersTriggered = false;
+        const heroObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !countersTriggered) {
+                    countersTriggered = true;
+                    setTimeout(animateCounters, 500);
+                }
+            });
+        }, { threshold: 0.3 });
+        heroObserver.observe(document.getElementById('home'));
+
+        // ========== SCROLL ANIMATIONS ==========
+        const animElements = document.querySelectorAll('.fade-up, .fade-left, .fade-right, .scale-in');
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        animElements.forEach(el => scrollObserver.observe(el));
+
+        // ========== PROPERTY FILTER ==========
+        function filterProperties(type, btn) {
+            // Update tabs
+            document.querySelectorAll('.tab-btn').forEach(t => {
+                t.classList.remove('active', 'bg-forest-50', 'dark:bg-forest-900/30', 'text-forest-700', 'dark:text-forest-300', 'border-forest-200', 'dark:border-forest-800');
+                t.classList.add('text-slate-600', 'dark:text-slate-400', 'border-slate-200', 'dark:border-slate-700');
+            });
+            btn.classList.add('active', 'bg-forest-50', 'dark:bg-forest-900/30', 'text-forest-700', 'dark:text-forest-300', 'border-forest-200', 'dark:border-forest-800');
+            btn.classList.remove('text-slate-600', 'dark:text-slate-400', 'border-slate-200', 'dark:border-slate-700');
+
+            // Filter cards
+            const cards = document.querySelectorAll('.property-card');
+            cards.forEach(card => {
+                if (type === 'all' || card.dataset.type === type) {
+                    card.style.display = '';
+                    card.style.opacity = '0';
+                    card.style.transform = 'scale(0.9)';
+                    setTimeout(() => {
+                        card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                        card.style.opacity = '1';
+                        card.style.transform = 'scale(1)';
+                    }, 50);
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // ========== TESTIMONIAL SLIDER ==========
+        let testimonialIndex = 0;
+        const testimonialTrack = document.getElementById('testimonialTrack');
+        const testimonialSlides = testimonialTrack.children.length;
+
+        function getVisibleSlides() {
+            if (window.innerWidth >= 1024) return 3;
+            if (window.innerWidth >= 768) return 2;
+            return 1;
+        }
+
+        function slideTestimonial(dir) {
+            const visible = getVisibleSlides();
+            const maxIndex = testimonialSlides - visible;
+            testimonialIndex = Math.max(0, Math.min(testimonialIndex + dir, maxIndex));
+
+            const slideWidth = 100 / visible;
+            testimonialTrack.style.transform = `translateX(-${testimonialIndex * slideWidth}%)`;
+        }
+
+        // ========== FAQ ACCORDION ==========
+        function toggleFaq(btn) {
+            const item = btn.parentElement;
+            const answer = item.querySelector('.faq-answer');
+            const icon = btn.querySelector('.faq-icon');
+            const isOpen = answer.classList.contains('open');
+
+            // Close all
+            document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
+            document.querySelectorAll('.faq-icon').forEach(i => i.classList.remove('rotated'));
+
+            if (!isOpen) {
+                answer.classList.add('open');
+                icon.classList.add('rotated');
+            }
+        }
+
+        // ========== MOBILE MENU ==========
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('open');
+            mobileOverlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('open');
+            mobileOverlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        // ========== NAVBAR SCROLL EFFECT ==========
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-md');
+            } else {
+                navbar.classList.remove('shadow-md');
+            }
+        });
+
+        // ========== BACK TO TOP ==========
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 600) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        // ========== ACTIVE NAV LINK ==========
+        const sections = document.querySelectorAll('section[id]');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('text-forest-600', 'dark:text-forest-400', 'bg-forest-50', 'dark:bg-forest-900/30');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('text-forest-600', 'dark:text-forest-400', 'bg-forest-50', 'dark:bg-forest-900/30');
+                }
+            });
+        });
+
+        // ========== CONTACT FORM ==========
+        const contactForm = document.getElementById('contactForm');
+        const toast = document.getElementById('toast');
+        const toastMsg = document.getElementById('toastMsg');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('formName').value.trim();
+            const phone = document.getElementById('formPhone').value.trim();
+            const message = document.getElementById('formMessage').value.trim();
+
+            if (!name || !phone || !message) {
+                showToast('Please fill in all required fields.', 'error');
+                return;
+            }
+
+            // Simulate form submission (replace with actual form endpoint like Formspree)
+            showToast('Thank you! We\'ll get back to you soon.', 'success');
+            contactForm.reset();
+        });
+
+        function showToast(msg, type) {
+            toastMsg.textContent = msg;
+            toast.className = 'toast fixed bottom-24 right-6 z-50 px-6 py-3.5 rounded-xl shadow-xl flex items-center gap-3';
+
+            if (type === 'success') {
+                toast.classList.add('bg-forest-600', 'text-white');
+            } else {
+                toast.classList.add('bg-red-600', 'text-white');
+            }
+
+            // Show
+            setTimeout(() => toast.classList.add('show'), 10);
+
+            // Hide
+            setTimeout(() => toast.classList.remove('show'), 3500);
+        }
+
+        // ========== SMOOTH SCROLL ==========
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80;
+                    const top = target.getBoundingClientRect().top + window.scrollY - offset;
+                    window.scrollTo({ top, behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
